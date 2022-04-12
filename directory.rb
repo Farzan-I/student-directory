@@ -1,86 +1,59 @@
-def input_students
-  puts "Please enter the names of the students".center(50)
-  puts "To finish, just hit return twice".center(50)
+def interactive_menu
   students = []
-  name = gets.strip
-  if name.empty?
-    name = "Unspecified"
-  end
+  loop do
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit"
 
-  puts "Please enter #{name}'s cohort:"
-  cohorts = ["January", "February", "March", "April", "May", "June", "July", 
-              "August", "September", "October", "November", "December"]
+    selection = gets.chomp
+
+    case selection
+    when "1"
+      students = input_students
+    when "2"
+      print_header
+      print(students)
+      print_footer(students)
+    when "9"
+      exit
+    else
+      puts "I don't know what you meant, try again"
+    end
+  end
+end
+
+def input_students
+  puts "Please enter the names of the students"
+  puts "To finish, just hit return twice"
   
-  while true
-    cohort = gets.strip.capitalize
-    if cohort.empty?
-      cohort = "Unspecified"
-      break
-    elsif cohorts.include?(cohort)
-      cohort
-      break
-    end
+  students = []
+  
+  name = gets.chomp
+  
+  while !name.empty? do
+    
+    students << {name: name, cohort: :november}
+    puts "Now we have #{students.count} students"
+    
+    name = gets.chomp
   end
-  cohort
-
-  until name == "Unspecified" && cohort == "Unspecified" do
-    students << { name: name, cohort: cohort.to_sym }
-      if students.count == 1
-        puts "Now we have #{students.count} student".center(50)
-      else
-        puts "Now we have #{students.count} students".center(50)
-      end
-    name = gets.strip
-    if name.empty?
-      name = "Unspecified"
-    end
-
-    puts "Please enter #{name}'s cohort:"
-    while true 
-      cohort = gets.strip.capitalize
-      if cohort.empty?
-        cohort = "Unspecified"
-        break
-      elsif cohorts.include?(cohort)
-        cohort
-        break
-      end
-    end
-    cohort
-  end
+  
   students
 end
 
-# Exercise 12
-def print_header(students)
-  if students.count > 0
-    puts "The students of Villains Academy".center(50)
-    puts "-------------".center(50)
-  end
+def print_header
+  puts "The students of Villains Academy"
+  puts "-------------"
 end
 
 def print(students)
-  students_cohorts = {}
-
   students.each do |student|
-    cohort = student[:cohort]
-    if students_cohorts[cohort] == nil
-      students_cohorts[cohort] = []
-    end
-    students_cohorts[cohort].push(student[:name])
-  end
-
-  students_cohorts.each do |cohort, name|
-    puts "#{cohort} cohort: #{name.join(", ")}"
+    puts "#{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students".center(50)
+  puts "Overall, we have #{students.count} great students"
 end
 
-students = input_students
-# Exercise 12
-print_header(students)
-print(students)
-print_footer(students)
+interactive_menu
