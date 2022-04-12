@@ -4,7 +4,7 @@ def input_students
   students = []
   name = gets.chomp
   if name.empty?
-    name = "Unspecified name"
+    name = "Unspecified"
   end
 
   puts "Please enter #{name}'s cohort:"
@@ -14,7 +14,7 @@ def input_students
   while true
     cohort = gets.chomp.capitalize
     if cohort.empty?
-      cohort = "Unspecified cohort"
+      cohort = "Unspecified"
       break
     elsif cohorts.include?(cohort)
       cohort
@@ -23,7 +23,7 @@ def input_students
   end
   cohort
 
-  until name == "Unspecified name" && cohort == "Unspecified cohort" do
+  until name == "Unspecified" && cohort == "Unspecified" do
     students << { name: name, cohort: cohort.to_sym }
       if students.count == 1
         puts "Now we have #{students.count} student".center(50)
@@ -32,14 +32,14 @@ def input_students
       end
     name = gets.chomp
     if name.empty?
-      name = "Unspecified name"
+      name = "Unspecified"
     end
 
     puts "Please enter #{name}'s cohort:"
     while true 
       cohort = gets.chomp.capitalize
       if cohort.empty?
-        cohort = "Unspecified cohort"
+        cohort = "Unspecified"
         break
       elsif cohorts.include?(cohort)
         cohort
@@ -57,10 +57,18 @@ def print_header
 end
 
 def print(students)
-  counter = 0
-  while counter < students.count
-    puts "#{students[counter][:name]} (#{students[counter][:cohort]} cohort)".center(50)
-    counter += 1
+  students_cohorts = {}
+
+  students.each do |student|
+    cohort = student[:cohort]
+    if students_cohorts[cohort] == nil
+      students_cohorts[cohort] = []
+    end
+    students_cohorts[cohort].push(student[:name])
+  end
+
+  students_cohorts.each do |cohort, name|
+    puts "#{cohort} cohort: #{name.join(", ")}"
   end
 end
 
