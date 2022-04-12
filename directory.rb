@@ -51,9 +51,12 @@ def input_students
   students
 end
 
-def print_header
-  puts "The students of Villains Academy".center(50)
-  puts "-------------".center(50)
+# Exercise 12
+def print_header(students)
+  if students.count > 0
+    puts "The students of Villains Academy".center(50)
+    puts "-------------".center(50)
+  end
 end
 
 def print(students)
@@ -77,6 +80,7 @@ def print_footer(students)
 end
 
 students = input_students
-print_header
+# Exercise 12
+print_header(students)
 print(students)
 print_footer(students)
