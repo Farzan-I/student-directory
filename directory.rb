@@ -2,7 +2,7 @@ def input_students
   puts "Please enter the names of the students".center(50)
   puts "To finish, just hit return twice".center(50)
   students = []
-  name = gets.chomp
+  name = gets.strip
   if name.empty?
     name = "Unspecified"
   end
@@ -12,7 +12,7 @@ def input_students
               "August", "September", "October", "November", "December"]
   
   while true
-    cohort = gets.chomp.capitalize
+    cohort = gets.strip.capitalize
     if cohort.empty?
       cohort = "Unspecified"
       break
@@ -30,14 +30,14 @@ def input_students
       else
         puts "Now we have #{students.count} students".center(50)
       end
-    name = gets.chomp
+    name = gets.strip
     if name.empty?
       name = "Unspecified"
     end
 
     puts "Please enter #{name}'s cohort:"
     while true 
-      cohort = gets.chomp.capitalize
+      cohort = gets.strip.capitalize
       if cohort.empty?
         cohort = "Unspecified"
         break
