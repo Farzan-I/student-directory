@@ -6,9 +6,17 @@ def input_students
   
   name = gets.chomp
   
+  # Exercise 5
   while !name.empty? do
+    puts "Please enter #{name}'s hobbies:"
+    hobbies = gets.chomp
+    puts "Please enter #{name}'s country of birth:"
+    birth_country = gets.chomp
+    puts "Please enter #{name}'s height (in cm):"
+    height = gets.chomp
 
-    students << { name: name, cohort: :November }
+    students << { name: name, cohort: :November, hobbies: hobbies, 
+                  birth_country: birth_country, height: height }
 
       if students.count == 1
         puts "Now we have #{students.count} student"
@@ -26,11 +34,11 @@ def print_header
   puts "-------------"
 end
 
-# Exeercise 4
+# Exercise 5: to print out the new hashes
 def print(students)
   counter = 0
   while counter < students.count
-    puts "#{students[counter][:name]} (#{students[counter][:cohort]} cohort)"
+    puts "#{students[counter][:name]} (#{students[counter][:cohort]} cohort) (hobbies: #{students[counter][:hobbies]}) (Country of birth: #{students[counter][:birth_country]}) (Height: #{students[counter][:height]}cm)"
     counter += 1
   end
 end
