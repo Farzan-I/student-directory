@@ -1,6 +1,6 @@
 @students = []
 
-def students_instance(name, cohort = "November")
+def students_instance(name, cohort = "november")
   @students << { name: name, cohort: cohort.to_sym }
 end
 
@@ -23,7 +23,9 @@ def process(selection)
     when "2" then show_students
     when "3" then save_students
     when "4" then load_students
-    when "9" then exit
+    when "9" 
+      puts "Exit initialised. Goodbye."
+      exit
     else 
       puts "I don't know what you meant, try again"
   end
@@ -71,15 +73,41 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "Saved the student information."
 end
 
 def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    students_instance(name, cohort)
+  puts "From which file would you like to load the students?"
+  filename = STDIN.gets.chomp
+  if File.exist?(filename)
+    file = File.open(filename, "r")
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(',')
+      students_instance(name, cohort)
+      if @students.count == 1
+        puts "#{@students.count} student successfully loaded from #{filename}."
+      else
+        puts "#{@students.count} students successfully loaded from #{filename}." 
+      end
+      file.close
+    end
+  elsif filename == ""
+    puts "Loading students.csv by default..."
+    file = File.open("students.csv", "r")
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(',')
+      students_instance(name, cohort)
+      if @students.count == 1
+        puts "#{@students.count} student successfully loaded from students.csv."
+      else
+        puts "#{@students.count} students successfully loaded from students.csv." 
+      end
+      file.close
+    end
+  elsif !File.exist?(filename)
+    "Sorry, I don't know that #{filename} file. Redirected to the menu..."
+    interactive_menu
   end
-  file.close
 end
 
 def try_load_students
