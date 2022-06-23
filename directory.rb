@@ -5,8 +5,8 @@ def students_instance(name, cohort = "november")
 end
 
 def print_menu 
-  puts [" ", "1. Input the students", "2. Show the students", 
-  "3. Save the list to students.csv", "4. Load the list from students.csv", 
+  puts [" ", "Welcome to the interactive students directory!", "What would you like to do?", " ", "1. Input the students", "2. Show the students", 
+  "3. Save the list to the default students.csv file", "4. Load a list of students from a file", 
   "9. Exit", " "]
 end
 
@@ -39,7 +39,12 @@ def input_students
   while !name.empty? do
     
     students_instance(name)
-    puts "Now we have #{@students.count} students"
+
+    if @students.count == 1
+      puts "Now we have #{@students.count} student."
+    else
+      puts "Now we have #{@students.count} students." 
+    end
 
     name = STDIN.gets.chomp
   end
@@ -78,6 +83,7 @@ end
 
 def load_students(filename = "students.csv")
   puts "From which file would you like to load the students?"
+  puts "If no name entered, students will be loaded from students.csv file"
   filename = STDIN.gets.chomp
   if File.exist?(filename)
     file = File.open(filename, "r")
@@ -124,5 +130,5 @@ def try_load_students
   end
 end
 
-try_load_students
 interactive_menu
+try_load_students
